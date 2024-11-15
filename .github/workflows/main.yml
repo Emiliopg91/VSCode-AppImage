@@ -83,7 +83,7 @@ jobs:
     steps:
       - name: Check conditional
         run: |
-          echo ${{ needs.generate-appimage.outputs.is_update == 'true' }}
+          echo ${{ needs.generate-appimage.outputs.is_update }}
     
       - name: Download tar.gz, AppImage, and AppImage.zsync
         uses: actions/download-artifact@v4
