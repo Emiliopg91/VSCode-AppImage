@@ -64,8 +64,8 @@ jobs:
         with:
           name: appimage-files
           path: |
-            ./${{ env.APPIMAGE_PATH }}
-            ./${{ env.APPIMAGE_PATH }}.zsync
+            ${{ env.APPIMAGE_PATH }}
+            ${{ env.APPIMAGE_PATH }}.zsync
 
   create-release:
     name: Create Release
