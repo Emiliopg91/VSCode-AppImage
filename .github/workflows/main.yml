@@ -18,9 +18,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq libfuse2
           pip install --upgrade certifi
-
-      - name: Download AppImage creator script
-        run: |
           wget -O createAppImage.py "https://raw.githubusercontent.com/Emiliopg91/AppImage-Creator/main/createAppImage.py"
 
       - name: Upload createAppImage.py as artifact
@@ -30,7 +27,7 @@ jobs:
           path: createAppImage.py
 
   download-binary-app:
-    name: Download binary app
+    name: Download app binaries
     runs-on: ubuntu-latest
     needs: setup-environment
     steps:
@@ -38,7 +35,7 @@ jobs:
         run: |
           wget -O vscode.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
       
-      - name: Upload tar.gz as artifact
+      - name: Upload binaries as artifact
         uses: actions/upload-artifact@v4
         with:
           name: vscode-binary
@@ -49,19 +46,22 @@ jobs:
     runs-on: ubuntu-latest
     needs: download-binary-app
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Download createAppImage.py from previous job
         uses: actions/download-artifact@v4
         with:
           name: createAppImage
           path: .
 
-      - name: Download tar.gz from previous job
+      - name: Download binaries from previous job
         uses: actions/download-artifact@v4
         with:
           name: vscode-binary
           path: .
 
-      - name: Unpack tar.gz
+      - name: Unpack binaries
         run: |
           tar -xzvf ./vscode.tar.gz
 
@@ -81,8 +81,8 @@ jobs:
         with:
           name: appimage-files
           path: |
-            ./Visual_Studio_Code-*.AppImage
-            ./Visual_Studio_Code-*.AppImage.zsync
+            ./*.AppImage
+            ./*.AppImage.zsync
 
   create-release:
     name: Create Release
@@ -93,13 +93,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: vscode-binary
-          path: ./vscode
+          path: .
           
       - name: Download AppImage and zsync files
         uses: actions/download-artifact@v4
         with:
           name: appimage-files
-          path: ./appimage
+          path: .
 
       - name: Create GitHub Release
         id: create_release
@@ -109,7 +109,5 @@ jobs:
           automatic_release_tag: latest
           prerelease: false
           files: |
-            ./vscode/vscode.tar.gz
-            ./appimage/Visual_Studio_Code-*.AppImage
-            ./appimage/Visual_Studio_Code-*.AppImage.zsync
+            ./*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
