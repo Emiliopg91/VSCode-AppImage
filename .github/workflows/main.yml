@@ -1,0 +1,59 @@
+name: Package & release VSCode AppImage
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Se ejecuta a las 12:00 AM UTC cada día
+  workflow_dispatch:     # Permite la ejecución manual del workflow
+
+permissions:
+  contents: write  # Permitir escritura en el repositorio (incluyendo tags)
+  
+jobs:
+  download_and_unzip:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libfuse2
+          pip install --upgrade certifi
+    
+      - name: Download latest VSCode
+        run: |
+          wget -O vscode.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
+          tar -xzvf vscode.tar.gz
+          
+      - name: Download AppImage creator script
+        run: |
+          wget -O createAppImage.py "https://raw.githubusercontent.com/Emiliopg91/AppImage-Creator/main/createAppImage.py"
+
+      - name: Build AppImage
+        run: |
+          version=$(cat ./VSCode-linux-x64/resources/app/package.json | jq -r  .version)
+          python3 createAppImage.py --entrypoint=./VSCode-linux-x64/code --name="Visual Studio Code" --version=$version  --icon=./VSCode-linux-x64/resources/app/resources/linux/code.png --description="Code Editing. Redefined." --desktop="./vsc.desktop"
+                  
+      - name: Upload artifacts
+        if: ${{ env.IS_UPDATE == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: appimage-files
+          path: |
+            ${{ env.APPIMAGE_PATH }}
+            ${{ env.APPIMAGE_PATH }}.zsync
+
+      - name: Release
+        if: ${{ env.IS_UPDATE == 'true' }}
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          title: ${{ env.APP_VERSION }}
+          automatic_release_tag: latest
+          prerelease: false
+          files: |
+            ${{ env.APPIMAGE_PATH }}
+            ${{ env.APPIMAGE_PATH }}.zsync
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
