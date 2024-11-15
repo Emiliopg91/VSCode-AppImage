@@ -53,26 +53,26 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: createAppImage
-          path: ./createAppImage.py
+          path: .
 
       - name: Download tar.gz from previous job
         uses: actions/download-artifact@v4
         with:
           name: vscode-binary
-          path: ./vscode
+          path: .
 
       - name: Unpack tar.gz
         run: |
-          tar -xzvf ./vscode/vscode.tar.gz -C ./vscode
+          tar -xzvf ./vscode.tar.gz -C ./vscode
 
       - name: Generate AppImage
         run: |
-          version=$(cat ./vscode/VSCode-linux-x64/resources/app/package.json | jq -r .version)
+          version=$(cat ./VSCode-linux-x64/resources/app/package.json | jq -r .version)
           python3 ./createAppImage.py \
-            --entrypoint=./vscode/VSCode-linux-x64/code \
+            --entrypoint=./VSCode-linux-x64/code \
             --name="Visual Studio Code" \
             --version=$version \
-            --icon=./vscode/VSCode-linux-x64/resources/app/resources/linux/code.png \
+            --icon=./VSCode-linux-x64/resources/app/resources/linux/code.png \
             --description="Code Editing. Redefined." \
             --desktop="./vsc.desktop"
         
