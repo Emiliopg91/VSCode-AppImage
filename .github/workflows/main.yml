@@ -9,23 +9,6 @@ permissions:
   contents: write  # Permitir escritura en el repositorio (incluyendo tags)
 
 jobs:
-  setup-environment:
-    name: Setup environment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq libfuse2
-          pip install --upgrade certifi
-          wget -O createAppImage.py "https://raw.githubusercontent.com/Emiliopg91/AppImage-Creator/main/createAppImage.py"
-
-      - name: Upload createAppImage.py as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: createAppImage
-          path: createAppImage.py
-
   download-binary-app:
     name: Download app binaries
     runs-on: ubuntu-latest
@@ -48,12 +31,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
-      - name: Download createAppImage.py from previous job
-        uses: actions/download-artifact@v4
-        with:
-          name: createAppImage
-          path: .
+
+      - name: Setup dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq libfuse2
+          pip install --upgrade certifi
+          wget -O createAppImage.py "https://raw.githubusercontent.com/Emiliopg91/AppImage-Creator/main/createAppImage.py"
 
       - name: Download binaries from previous job
         uses: actions/download-artifact@v4
