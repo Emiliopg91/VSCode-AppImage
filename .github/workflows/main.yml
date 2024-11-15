@@ -1,4 +1,4 @@
-name: Package & release Postman AppImage
+name: Package & release Visual Studio Code AppImage
 
 on:
   schedule:
