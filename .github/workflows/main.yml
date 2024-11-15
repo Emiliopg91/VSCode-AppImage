@@ -96,7 +96,7 @@ jobs:
         id: create_release
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          title: "Visual Studio Code ${{ needs.generate-appimage.outputs.version }}"
+          title: "${{ needs.generate-appimage.outputs.version }}"
           automatic_release_tag: latest
           prerelease: false
           files: |
