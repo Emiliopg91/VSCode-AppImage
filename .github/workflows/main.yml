@@ -66,7 +66,6 @@ jobs:
             --icon=./VSCode-linux-x64/resources/app/resources/linux/code.png \
             --description="Code Editing. Redefined." \
             --desktop="./vsc.desktop"
-          echo "::set-output name=is_update::${{ env.IS_UPDATE }}"
         
       - name: Upload AppImage and zsync files as artifacts
         uses: actions/upload-artifact@v4
@@ -75,6 +74,10 @@ jobs:
           path: |
             ${{ env.APPIMAGE_PATH }}
             ${{ env.APPIMAGE_PATH }}.zsync
+
+      - name: Export is_update
+        run: |
+          echo "::set-output name=is_update::${{ env.IS_UPDATE }}"
 
   create-release:
     name: Create Release
