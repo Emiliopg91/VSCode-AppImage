@@ -34,6 +34,11 @@ jobs:
           tar -xzvf ${{ env.PACKAGED_PATH }} -C vscode
           echo "UNPACKED_PATH=${{ github.workspace }}/vscode/VSCode-linux-x64" >> $GITHUB_ENV
 
+      - name: Inspect directory
+        run: |
+          echo "Inspecting unpacked directory..."
+          ls -R vscode
+
       - name: Save paths
         id: save-paths
         run: |
