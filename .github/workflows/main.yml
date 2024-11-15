@@ -63,7 +63,7 @@ jobs:
 
       - name: Unpack tar.gz
         run: |
-          tar -xzvf ./vscode.tar.gz -C ./vscode
+          tar -xzvf ./vscode.tar.gz
 
       - name: Generate AppImage
         run: |
