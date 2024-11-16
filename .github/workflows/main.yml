@@ -16,7 +16,7 @@ jobs:
     name: Generate AppImage
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get_version.outputs.version }}  # Definir la salida de la versión
+      version: ${{ steps.consolidate_output.outputs.version }}  # Definir la salida de la versión
       is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
@@ -54,6 +54,7 @@ jobs:
         id: consolidate_output
         run: |
           echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
+          echo "version=${{ env.version }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
