@@ -29,7 +29,7 @@ jobs:
     needs: download-binary-app
     outputs:
       version: ${{ steps.get_version.outputs.version }}  # Definir la salida de la versión
-      is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
+      is_update: ${{ steps.generate-appimage-file.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -58,7 +58,8 @@ jobs:
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Generate AppImage
-        uses: actions/download-artifact@v4
+        id: generate-appimage-file
+        uses: Emiliopg91/AppImage-Creator@latest
         with: 
           entrypoint: "./VSCode-linux-x64/code"
           name: "Visual Studio Code" 
@@ -73,11 +74,6 @@ jobs:
           path: |
             ${{ env.APPIMAGE_PATH }}
             ${{ env.APPIMAGE_PATH }}.zsync
-        
-      - name: Consolidate output
-        id: consolidate_output
-        run: |
-          echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
