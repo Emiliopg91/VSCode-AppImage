@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   generate-appimage:
-    name: Download app binaries
+    name: Generate AppImage
     runs-on: ubuntu-latest
     outputs:
       is_update: ${{ steps.generate-appimage-file.outputs.is_update }}  # Exportar IS_UPDATE como output
