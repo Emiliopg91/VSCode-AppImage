@@ -29,7 +29,7 @@ jobs:
     needs: download-binary-app
     outputs:
       version: ${{ steps.get_version.outputs.version }}  # Definir la salida de la versión
-      is_update: ${{ steps.generate_appimage.outputs.is_update }}  # Exportar IS_UPDATE como output
+      is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -59,7 +59,6 @@ jobs:
           echo "::set-output name=version::$version"  # Definir la salida
 
       - name: Generate AppImage
-        id: generate_appimage
         run: |
           python3 ./createAppImage.py \
             --entrypoint=./VSCode-linux-x64/code \
@@ -68,7 +67,6 @@ jobs:
             --icon=./VSCode-linux-x64/resources/app/resources/linux/code.png \
             --description="Code Editing. Redefined." \
             --desktop="./vsc.desktop"
-          echo "::set-output name=is_update::${{ env.IS_UPDATE }}"
         
       - name: Upload AppImage and zsync files as artifacts
         uses: actions/upload-artifact@v4
@@ -77,6 +75,11 @@ jobs:
           path: |
             ${{ env.APPIMAGE_PATH }}
             ${{ env.APPIMAGE_PATH }}.zsync
+        
+      - name: Consolidate output
+        id: consolidate_output
+        run: |
+          echo "::set-output name=is_update::${{ env.IS_UPDATE }}"
 
   create-release:
     name: Create Release
