@@ -19,11 +19,16 @@ jobs:
       is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: Download latest VSCode
         run: |
           wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
+          
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-binaries
+          path: binaries.tar.gz
 
       - name: Unpack binaries
         run: |
