@@ -39,7 +39,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq libfuse2
           pip install --upgrade certifi
-          wget -O createAppImage.py "https://raw.githubusercontent.com/Emiliopg91/AppImage-Creator/main/createAppImage.py"
 
       - name: Download binaries from previous job
         uses: actions/download-artifact@v4
@@ -59,14 +58,13 @@ jobs:
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Generate AppImage
-        run: |
-          python3 ./createAppImage.py \
-            --entrypoint=./VSCode-linux-x64/code \
-            --name="Visual Studio Code" \
-            --version=${{ env.version }} \
-            --icon=./VSCode-linux-x64/resources/app/resources/linux/code.png \
-            --description="Code Editing. Redefined." \
-            --desktop="./vsc.desktop"
+        uses: actions/download-artifact@v4
+        with: 
+          entrypoint: "./VSCode-linux-x64/code"
+          name: "Visual Studio Code" 
+          version: ${{ env.version }}
+          icon: "./VSCode-linux-x64/resources/app/resources/linux/code.png"
+          desktop: "./vsc.desktop"
         
       - name: Upload AppImage and zsync files as artifacts
         uses: actions/upload-artifact@v4
