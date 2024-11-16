@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate AppImage
         id: generate-appimage-file
-        uses: Emiliopg91/AppImage-Creator@1.1.3
+        uses: Emiliopg91/AppImage-Creator@1.1.4
         with: 
           entrypoint: "./VSCode-linux-x64/code"
           name: "Visual Studio Code" 
