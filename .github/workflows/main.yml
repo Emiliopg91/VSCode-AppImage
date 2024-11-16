@@ -16,7 +16,7 @@ jobs:
     name: Generate AppImage
     runs-on: ubuntu-latest
     outputs:
-      is_update: ${{ steps.generate-appimage-file.outputs.is_update }}  # Exportar IS_UPDATE como output
+      is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -36,7 +36,6 @@ jobs:
           echo "version=$version" >> $GITHUB_ENV
 
       - name: Generate AppImage
-        id: generate-appimage-file
         uses: Emiliopg91/AppImage-Creator@1.1.7
         with: 
           entrypoint: "./VSCode-linux-x64/code"
@@ -44,6 +43,11 @@ jobs:
           version: ${{ env.version }}
           icon: "./VSCode-linux-x64/resources/app/resources/linux/code.png"
           desktop: "./vsc.desktop"
+        
+      - name: Consolidate output
+        id: consolidate_output
+        run: |
+          echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
