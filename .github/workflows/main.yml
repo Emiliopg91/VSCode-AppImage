@@ -56,7 +56,7 @@ jobs:
         run: |
           version=$(cat ./VSCode-linux-x64/resources/app/package.json | jq -r .version)
           echo "version=$version" >> $GITHUB_ENV
-          echo "::set-output name=version::$version"  # Definir la salida
+          echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Generate AppImage
         run: |
@@ -79,7 +79,7 @@ jobs:
       - name: Consolidate output
         id: consolidate_output
         run: |
-          echo "::set-output name=is_update::${{ env.IS_UPDATE }}"
+          echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
