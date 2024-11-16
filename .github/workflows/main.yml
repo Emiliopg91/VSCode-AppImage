@@ -15,6 +15,9 @@ jobs:
     outputs:
       is_update: ${{ steps.generate-appimage-file.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
       - name: Download latest VSCode
         run: |
           wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
