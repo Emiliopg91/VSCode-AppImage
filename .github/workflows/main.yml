@@ -3,7 +3,10 @@ name: Package & release Visual Studio Code AppImage
 on:
   schedule:
     - cron: "0 0 * * *"  # Se ejecuta a las 12:00 AM UTC cada día
-  workflow_dispatch:     # Permite la ejecución manual del workflow
+  workflow_dispatch:     # Permite la ejecución manual del workflow  
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write  # Permitir escritura en el repositorio (incluyendo tags)
