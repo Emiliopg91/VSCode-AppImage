@@ -21,13 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
-      - name: Install dependencies
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y jq libfuse2
-            pip install --upgrade certifi
-        shell: bash
-        
       - name: Download latest VSCode
         run: |
           wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
