@@ -48,7 +48,7 @@ jobs:
         id: consolidate_output
         run: |
           echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
-          echo "version=${{ env.version }}" >> $GITHUB_OUTPUT
+          echo "version=${{ env.APP_VERSION }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
