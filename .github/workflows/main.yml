@@ -35,18 +35,12 @@ jobs:
         run: |
           tar -xzvf ./binaries.tar.gz
 
-      - name: Get version
-        id: get_version
-        run: |
-          version=$(cat ./VSCode-linux-x64/resources/app/package.json | jq -r .version)
-          echo "version=$version" >> $GITHUB_ENV
-
       - name: Generate AppImage
-        uses: Emiliopg91/AppImage-Creator@1.1.7
+        uses: Emiliopg91/AppImage-Creator@1.1.8
         with: 
           entrypoint: "./VSCode-linux-x64/code"
           name: "Visual Studio Code" 
-          version: ${{ env.version }}
+          versioncmd: "cat ./VSCode-linux-x64/resources/app/package.json | jq -r .version"
           icon: "./VSCode-linux-x64/resources/app/resources/linux/code.png"
           desktop: "./vsc.desktop"
         
