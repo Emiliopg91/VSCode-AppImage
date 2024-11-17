@@ -18,3 +18,8 @@ Actions=new-empty-window;
 Name=New Empty Window
 Exec={entrypoint} --new-window %F
 Icon={icon}
+
+[AppImage Creator]
+Entrypoint=./VSCode-linux-x64/code
+Icon=./VSCode-linux-x64/resources/app/resources/linux/code.png
+Version-Cmd=cat ./VSCode-linux-x64/resources/app/package.json | jq -r .version
