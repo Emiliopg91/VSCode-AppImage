@@ -1,8 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name={name}
-GenericName={name}
+Name=Visual Studio Code
 X-AppImage-Version={version}
 Comment=Code Editing. Redefined.
 Exec={entrypoint} --unity-launch %F
