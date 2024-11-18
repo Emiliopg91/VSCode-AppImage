@@ -42,8 +42,8 @@ jobs:
         if: env.IS_UPDATE == 'true'
         uses: marvinpinto/action-automatic-releases@latest
         with:
-          title: "${{ needs.generate-appimage.outputs.version }}"
-          automatic_release_tag: "${{ needs.generate-appimage.outputs.version }}"
+          title: ${{ env.APP_VERSION }}
+          automatic_release_tag: ${{ env.APP_VERSION }}"
           prerelease: false
           files: |
             binaries-${{ env.APP_VERSION }}.tar.gz
