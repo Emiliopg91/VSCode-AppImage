@@ -25,11 +25,6 @@ jobs:
       - name: Download latest VSCode
         run: |
           wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
-          
-      - uses: actions/upload-artifact@v4
-        with:
-          name: app-binaries
-          path: binaries.tar.gz
 
       - name: Unpack binaries
         run: |
@@ -38,6 +33,13 @@ jobs:
       - name: Generate AppImage
         id: generate-appimage-file
         uses: Emiliopg91/AppImage-Creator@latest      
+          
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v4
+        if: ${{ env.IS_UPDATE == 'true' }}
+        with:
+          name: app-binaries
+          path: binaries.tar.gz
         
       - name: Consolidate output
         id: consolidate_output
