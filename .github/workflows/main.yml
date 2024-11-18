@@ -16,8 +16,8 @@ jobs:
     name: Generate AppImage
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.consolidate_output.outputs.version }}  # Definir la salida de la versión
-      is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
+      version: ${{ steps.generate-appimage-file.outputs.version }}  # Definir la salida de la versión
+      is_update: ${{ steps.generate-appimage-file.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,13 +36,8 @@ jobs:
           tar -xzvf ./binaries.tar.gz
 
       - name: Generate AppImage
+        id: generate-appimage-file
         uses: Emiliopg91/AppImage-Creator@latest
-        
-      - name: Consolidate output
-        id: consolidate_output
-        run: |
-          echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
-          echo "version=${{ env.APP_VERSION }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
