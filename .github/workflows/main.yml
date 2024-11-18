@@ -36,7 +36,7 @@ jobs:
           tar -xzvf ./binaries.tar.gz
 
       - name: Generate AppImage
-        uses: Emiliopg91/AppImage-Creator@1.2.0
+        uses: Emiliopg91/AppImage-Creator@latest
         
       - name: Consolidate output
         id: consolidate_output
