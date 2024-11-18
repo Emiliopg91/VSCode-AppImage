@@ -23,7 +23,7 @@ jobs:
         run: |
           binariesurl=$(cat app.desktop | grep Binaries-Url)
           IFS="=" read -r name url <<< "$binariesurl"
-          wget -O binaries.tar.gz $url
+          wget -q -O binaries.tar.gz $url
 
       - name: Unpack binaries
         run: |
