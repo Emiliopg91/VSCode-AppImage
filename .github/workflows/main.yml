@@ -1,4 +1,4 @@
-name: Package & release Visual Studio Code AppImage
+name: Package & release AppImage
 
 on:
   schedule:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   generate-appimage:
-    name: Generate AppImage
+    name: Generate and publish AppImage
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.consolidate_output.outputs.version }}  # Definir la salida de la versión
@@ -22,13 +22,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Download latest VSCode
+      - name: Download latest binaries
         run: |
           wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
 
       - name: Unpack binaries
         run: |
-          tar -xzvf ./binaries.tar.gz
+          tar -xzf ./binaries.tar.gz
 
       - name: Generate AppImage
         id: generate-appimage-file
