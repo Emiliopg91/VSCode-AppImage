@@ -37,7 +37,13 @@ jobs:
 
       - name: Generate AppImage
         id: generate-appimage-file
-        uses: Emiliopg91/AppImage-Creator@latest
+        uses: Emiliopg91/AppImage-Creator@latest      
+        
+      - name: Consolidate output
+        id: consolidate_output
+        run: |
+          echo "is_update=${{ env.IS_UPDATE }}" >> $GITHUB_OUTPUT
+          echo "version=${{ env.APP_VERSION }}" >> $GITHUB_OUTPUT
 
   create-release:
     name: Create Release
