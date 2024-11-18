@@ -50,7 +50,7 @@ jobs:
     needs: generate-appimage
     if: ${{ needs.generate-appimage.outputs.is_update == 'true' }}
     steps:    
-      - name: Download tar.gz, AppImage, and AppImage.zsync
+      - name: Download binaries
         uses: actions/download-artifact@v4
         with:
           name: app-binaries
