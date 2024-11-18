@@ -15,16 +15,15 @@ jobs:
   generate-appimage:
     name: Generate and publish AppImage
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.consolidate_output.outputs.version }}  # Definir la salida de la versión
-      is_update: ${{ steps.consolidate_output.outputs.is_update }}  # Exportar IS_UPDATE como output
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
       - name: Download latest binaries
         run: |
-          wget -O binaries.tar.gz "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64"
+          binariesurl=$(cat vsc.desktop | grep Binaries-Url)
+          IFS="=" read -r name url <<< "$binariesurl"
+          wget -O binaries.tar.gz $url
 
       - name: Unpack binaries
         run: |
