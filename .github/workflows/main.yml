@@ -21,7 +21,7 @@ jobs:
         
       - name: Download latest binaries
         run: |
-          binariesurl=$(cat vsc.desktop | grep Binaries-Url)
+          binariesurl=$(cat app.desktop | grep Binaries-Url)
           IFS="=" read -r name url <<< "$binariesurl"
           wget -O binaries.tar.gz $url
 
