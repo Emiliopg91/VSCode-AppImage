@@ -31,10 +31,7 @@ jobs:
 
       - name: Generate AppImage
         id: generate-appimage-file
-        uses: Emiliopg91/AppImage-Creator@latest      
-
-      - name: Rename binaries
-        run: mv binaries.tar.gz binaries-${{ env.APP_VERSION }}.tar.gz
+        uses: Emiliopg91/AppImage-Creator@latest
 
       - name: Create GitHub Release
         id: create_release
@@ -45,7 +42,7 @@ jobs:
           automatic_release_tag: ${{ env.APP_VERSION }}
           prerelease: false
           files: |
-            binaries-${{ env.APP_VERSION }}.tar.gz
+            binaries.tar.gz
             ${{ env.APPIMAGE_PATH }}
             ${{ env.APPIMAGE_PATH }}.zsync
             
