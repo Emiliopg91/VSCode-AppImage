@@ -45,6 +45,5 @@ jobs:
             binaries.tar.gz
             ${{ env.APPIMAGE_PATH }}
             ${{ env.APPIMAGE_PATH }}.msync
-            ${{ env.APPIMAGE_PATH }}.zsync
             
           repo_token: ${{ secrets.GITHUB_TOKEN }}
