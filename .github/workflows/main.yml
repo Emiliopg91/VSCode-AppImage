@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate AppImage
         id: generate-appimage-file
-        uses: Emiliopg91/AppImage-Creator@latest
+        uses: Emiliopg91/AppImage-Creator-2@latest
 
       - name: Create GitHub Release
         id: create_release
