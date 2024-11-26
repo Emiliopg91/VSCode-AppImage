@@ -32,6 +32,9 @@ jobs:
       - name: Generate AppImage
         id: generate-appimage-file
         uses: Emiliopg91/AppImage-Creator-2@latest
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          is_electron: false
 
       - name: Create GitHub Release
         id: create_release
